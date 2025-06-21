@@ -441,7 +441,7 @@ export default function Home() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg">Registration Fee</h3>
-                        <p className="text-gray-600">₹600 per person</p>
+                        <p className="text-gray-600">₹650 per person</p>
                       </div>
                     </div>
                   </div>
