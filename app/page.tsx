@@ -72,13 +72,6 @@ export default function Home() {
   const [likedPhotos, setLikedPhotos] = useState<number[]>([]);
   const [showBlessings, setShowBlessings] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [gender, setGender] = useState('');
-  const [foodPreference, setFoodPreference] = useState('');
-  const [registrationStatus, setRegistrationStatus] = useState('');
-  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
 
   useEffect(() => {
     // Debug: Log environment variables
@@ -137,123 +130,6 @@ export default function Home() {
     setIsFullscreen(!isFullscreen);
   };
 
-  useEffect(() => {
-    console.log('Form state updated:', {
-      fullName,
-      email,
-      phone,
-      gender,
-      foodPreference
-    });
-  }, [fullName, email, phone, gender, foodPreference]);
-
-  useEffect(() => {
-    console.log('Registration form visibility:', showRegistrationForm);
-  }, [showRegistrationForm]);
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const timestamp = new Date().toISOString();
-    console.log('=== REGISTRATION START ===');
-    console.log('Time:', timestamp);
-    console.log('Form Values:', {
-      fullName,
-      email,
-      phone,
-      gender,
-      foodPreference
-    });
-
-    // Validate form data
-    if (!fullName || !email || !phone || !gender || !foodPreference) {
-      console.log('❌ Form validation failed - missing required fields');
-      setRegistrationStatus('Please fill in all required fields');
-      return;
-    }
-
-    try {
-      // Split full name into first and last name
-      const nameParts = fullName.trim().split(' ');
-      const firstName = nameParts[0];
-      const lastName = nameParts.slice(1).join(' ') || firstName;
-
-      // Prepare registration data
-      const registrationData = {
-        first_name: firstName,
-        last_name: lastName,
-        email: email.trim(),
-        phone: phone.trim(),
-        gender: gender,
-        food_preference: foodPreference,
-        payment_status: 'pending',
-        photo_uploaded: false,
-        created_at: timestamp
-      };
-
-      console.log('📤 Sending to Supabase:', registrationData);
-
-      // Insert registration data
-      const { data, error } = await supabase
-        .from('registrations')
-        .insert([registrationData])
-        .select();
-
-      if (error) {
-        console.error('❌ Supabase Error:', error);
-        console.error('Error Details:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-          hint: error.hint
-        });
-        setRegistrationStatus(`Registration failed: ${error.message}`);
-        return;
-      }
-
-      console.log('✅ Registration successful:', data);
-      
-      // Store registration data for payment page
-      const paymentData = {
-        name: fullName,
-        email: email,
-        phone: phone,
-        foodPreference: foodPreference,
-        registrationId: data[0].id
-      };
-      localStorage.setItem('registrationData', JSON.stringify(paymentData));
-
-      // Reset form
-      setShowRegistrationForm(false);
-      setFullName('');
-      setEmail('');
-      setPhone('');
-      setGender('');
-      setFoodPreference('');
-
-      // Show success message
-      setRegistrationStatus('Registration successful! Redirecting to payment...');
-      
-      // Redirect to payment page
-      window.location.href = '/payment';
-
-    } catch (err) {
-      console.error('❌ Unexpected error:', err);
-      setRegistrationStatus(`Registration failed: ${(err as Error).message}`);
-    }
-    console.log('=== REGISTRATION END ===');
-  };
-
-  const testFormState = () => {
-    console.log('Current form state:', {
-      fullName,
-      email,
-      phone,
-      gender,
-      foodPreference,
-      showRegistrationForm
-    });
-  };
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <BlessingShower isActive={showBlessings} />
@@ -278,9 +154,6 @@ export default function Home() {
               <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
                 Register Now
               </Button>
-            </Link>
-            <Link href="/admin">
-              <Button variant="outline">Admin</Button>
             </Link>
           </div>
         </div>
