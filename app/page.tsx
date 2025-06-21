@@ -8,8 +8,6 @@ import { Calendar, MapPin, DollarSign, Users, Music, Utensils, Gamepad2, PartyPo
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import BlessingShower from './components/BlessingShower';
-import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
 
 interface FoodItems {
   lunch: {
