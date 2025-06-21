@@ -132,7 +132,7 @@ export default function AdminPage() {
         reg.foodPreference,
         reg.paymentStatus,
         reg.paymentId || '',
-        reg.registrationDate.toDate ? reg.registrationDate.toDate().toLocaleDateString() : new Date(reg.registrationDate).toLocaleDateString(),
+        new Date(reg.registrationDate).toLocaleDateString(),
         reg.photoUrl ? 'Yes' : 'No'
       ].join(','))
     ].join('\n');
@@ -381,10 +381,7 @@ export default function AdminPage() {
                         )}
                       </TableCell>
                       <TableCell className="text-white/80 text-sm">
-                        {registration.registrationDate.toDate 
-                          ? registration.registrationDate.toDate().toLocaleDateString()
-                          : new Date(registration.registrationDate).toLocaleDateString()
-                        }
+                        {new Date(registration.registrationDate).toLocaleDateString()}
                       </TableCell>
                     </TableRow>
                   ))}
