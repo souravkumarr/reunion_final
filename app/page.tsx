@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import BlessingShower from './components/BlessingShower';
 
+// Final check to force deployment
 interface FoodItems {
   lunch: {
     nonVeg: string[];
