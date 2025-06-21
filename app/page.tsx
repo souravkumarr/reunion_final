@@ -163,17 +163,15 @@ export default function Home() {
       <section className="relative pt-20 pb-16 min-h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+          <iframe
+            className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2"
             style={{ filter: 'brightness(0.7)' }}
-          >
-            <source src="/reunion-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+            src="https://www.youtube.com/embed/uYyoWJJwb-s?autoplay=1&mute=1&loop=1&playlist=uYyoWJJwb-s&controls=0&showinfo=0&modestbranding=1&rel=0"
+            title="reunion video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
           
           {/* Video Overlay */}
           <div className="absolute inset-0 bg-black/40"></div>
