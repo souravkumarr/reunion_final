@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { unoptimized: true },
-  transpilePackages: ['undici'],
+  images: { 
+    unoptimized: true,
+    domains: ['localhost'],
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Prevent undici from being bundled on the client side
@@ -14,6 +15,13 @@ const nextConfig = {
         undici: false,
       };
     }
+    
+    // Fix for undici module parsing issues
+    config.module.rules.push({
+      test: /node_modules\/undici/,
+      use: 'null-loader',
+    });
+    
     return config;
   },
 };
