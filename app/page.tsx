@@ -71,7 +71,6 @@ export default function Home() {
   const [likedPhotos, setLikedPhotos] = useState<number[]>([]);
   const [showBlessings, setShowBlessings] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState('Checking connection...');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -101,26 +100,6 @@ export default function Home() {
     
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
-
-  useEffect(() => {
-    const checkConnection = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('connection_test')
-          .select('count')
-          .limit(1);
-
-        if (error) throw error;
-        setConnectionStatus('Connected to database');
-        console.log('Supabase connection test successful:', data);
-      } catch (error) {
-        console.error('Error:', error);
-        setConnectionStatus('Database connection failed');
-      }
-    };
-
-    checkConnection();
-  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % memoryPhotos.length);
@@ -276,11 +255,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      {/* Connection Status Banner */}
-      <div className="fixed top-0 left-0 right-0 bg-blue-100 p-2 text-center z-50">
-        {connectionStatus}
-      </div>
-
       <BlessingShower isActive={showBlessings} />
       
       {/* Navigation */}
